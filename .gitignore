@@ -1,0 +1,5 @@
+build/
+docker/
+out/
+.idea
+.gradle
