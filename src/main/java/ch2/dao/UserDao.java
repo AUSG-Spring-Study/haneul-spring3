@@ -1,8 +1,11 @@
-package user.dao;
+package ch2.dao;
 
-import user.domain.User;
+import ch2.domain.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
     private ConnectionMaker connectionMaker;

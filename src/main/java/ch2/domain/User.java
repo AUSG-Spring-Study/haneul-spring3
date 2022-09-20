@@ -1,4 +1,4 @@
-package user.domain;
+package ch2.domain;
 
 public class User {
     String id;
