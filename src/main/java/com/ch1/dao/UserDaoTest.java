@@ -1,8 +1,8 @@
-package ch1.dao;
+package com.ch1.dao;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ch1.domain.User;
+import com.ch1.domain.User;
 
 import java.sql.SQLException;
 

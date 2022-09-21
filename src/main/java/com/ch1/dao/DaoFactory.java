@@ -1,4 +1,4 @@
-package ch1.dao;
+package com.ch1.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

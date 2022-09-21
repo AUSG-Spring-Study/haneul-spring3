@@ -1,6 +1,6 @@
-package ch1.dao;
+package com.ch1.dao;
 
-import ch1.domain.User;
+import com.ch1.domain.User;
 
 import java.sql.*;
 
