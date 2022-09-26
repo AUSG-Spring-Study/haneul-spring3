@@ -1,8 +1,8 @@
 package com.ch2;
 
-import com.ch2.dao.UserDao2;
-import com.ch2.dao.UserDaoFactory;
-import com.ch2.domain.User;
+import com.ch3.dao.DaoFactory3;
+import com.ch3.dao.UserDao3;
+import com.ch3.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -18,8 +18,8 @@ public class UserDaoTest {
 
     @Test
     void addAndGet() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(UserDaoFactory.class);
-        UserDao2 dao = context.getBean("userDao2", UserDao2.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory3.class);
+        UserDao3 dao = context.getBean("userDao3", UserDao3.class);
 
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
@@ -41,8 +41,8 @@ public class UserDaoTest {
 
     @Test
     void count() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(UserDaoFactory.class);
-        UserDao2 dao = context.getBean("userDao2", UserDao2.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory3.class);
+        UserDao3 dao = context.getBean("userDao3", UserDao3.class);
 
         User user1 = new User("haneul", "이하늘", "spring1");
         User user2 = new User("sky", "이하늘", "spring2");
@@ -61,8 +61,8 @@ public class UserDaoTest {
 
     @Test
     public void getUserFailure() throws SQLException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(UserDaoFactory.class);
-        UserDao2 dao = context.getBean("userDao2", UserDao2.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory3.class);
+        UserDao3 dao = context.getBean("userDao3", UserDao3.class);
 
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
