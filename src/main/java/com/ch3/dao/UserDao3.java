@@ -77,9 +77,9 @@ public class UserDao3 {
         rs.next();
         int count = rs.getInt(1);
 
-        rs.close();;
-        ps.close();;
-        c.close();;
+        rs.close();
+        ps.close();
+        c.close();
 
         return count;
     }
