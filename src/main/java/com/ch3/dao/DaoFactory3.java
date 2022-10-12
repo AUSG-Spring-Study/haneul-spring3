@@ -25,4 +25,7 @@ public class DaoFactory3 {
     public UserDao3 userDao3() {
         return new UserDao3(connectionMaker());
     }
+
+    @Bean
+    public UserDaoJdbcTemplate userDaoJdbcTemplate() { return new UserDaoJdbcTemplate(connectionMaker()); }
 }

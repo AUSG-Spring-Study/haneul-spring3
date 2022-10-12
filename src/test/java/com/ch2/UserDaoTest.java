@@ -2,6 +2,7 @@ package com.ch2;
 
 import com.ch3.dao.DaoFactory3;
 import com.ch3.dao.UserDao3;
+import com.ch3.dao.UserDaoJdbcTemplate;
 import com.ch3.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,8 @@ public class UserDaoTest {
     ApplicationContext context;
     @Autowired
     private UserDao3 dao;
+    @Autowired
+    private UserDaoJdbcTemplate userDaoJdbcTemplate;
 
     private User user1;
     private User user2;
@@ -42,43 +45,43 @@ public class UserDaoTest {
 
     @Test
     public void addAndGet() throws SQLException, ClassNotFoundException {
-        dao.deleteAll();
-        assertThat(dao.getCount(), is(0));
+        userDaoJdbcTemplate.deleteAll();
+        assertThat(userDaoJdbcTemplate.getCount(), is(0));
 
-        dao.add(user1);
-        dao.add(user2);
+        userDaoJdbcTemplate.add(user1);
+        userDaoJdbcTemplate.add(user2);
         assertThat(dao.getCount(), is(2));
 
-        User userget1 = dao.get(user1.getId());
+        User userget1 = userDaoJdbcTemplate.get(user1.getId());
         assertThat(userget1.getName(), is(user1.getName()));
         assertThat(userget1.getPassword(), is(user1.getPassword()));
 
-        User userget2 = dao.get(user2.getId());
+        User userget2 = userDaoJdbcTemplate.get(user2.getId());
         assertThat(userget2.getName(), is(user2.getName()));
         assertThat(userget2.getPassword(), is(user2.getPassword()));
     }
 
     @Test
     public void count() throws SQLException, ClassNotFoundException {
-        dao.deleteAll();
-        assertThat(dao.getCount(), is(0));
+        userDaoJdbcTemplate.deleteAll();
+        assertThat(userDaoJdbcTemplate.getCount(), is(0));
 
-        dao.add(user1);
-        assertThat(dao.getCount(), is(1));
+        userDaoJdbcTemplate.add(user1);
+        assertThat(userDaoJdbcTemplate.getCount(), is(1));
 
-        dao.add(user2);
-        assertThat(dao.getCount(), is(2));
+        userDaoJdbcTemplate.add(user2);
+        assertThat(userDaoJdbcTemplate.getCount(), is(2));
 
-        dao.add(user3);
-        assertThat(dao.getCount(), is(3));
+        userDaoJdbcTemplate.add(user3);
+        assertThat(userDaoJdbcTemplate.getCount(), is(3));
     }
 
     @Test
     void getUserFailure() throws SQLException {
-        dao.deleteAll();
-        assertThat(dao.getCount(), is(0));
+        userDaoJdbcTemplate.deleteAll();
+        assertThat(userDaoJdbcTemplate.getCount(), is(0));
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
-            dao.get("unknown_id");
+            userDaoJdbcTemplate.get("unknown_id");
         });
     }
 }
