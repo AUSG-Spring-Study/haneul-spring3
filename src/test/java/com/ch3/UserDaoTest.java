@@ -1,8 +1,8 @@
-package com.ch2;
+package com.ch3;
 
 import com.ch3.dao.DaoFactory3;
 import com.ch3.dao.UserDao3;
-import com.ch3.dao.UserDaoJdbcTemplate;
+import com.ch3.dao.UserDaoJdbc;
 import com.ch3.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ public class UserDaoTest {
     @Autowired
     private UserDao3 dao;
     @Autowired
-    private UserDaoJdbcTemplate userDaoJdbcTemplate;
+    private UserDaoJdbc userDaoJdbc;
 
     private User user1;
     private User user2;
@@ -46,69 +46,69 @@ public class UserDaoTest {
 
     @Test
     public void addAndGet() throws SQLException, ClassNotFoundException {
-        userDaoJdbcTemplate.deleteAll();
-        assertThat(userDaoJdbcTemplate.getCount(), is(0));
+        userDaoJdbc.deleteAll();
+        assertThat(userDaoJdbc.getCount(), is(0));
 
-        userDaoJdbcTemplate.add(user1);
-        userDaoJdbcTemplate.add(user2);
+        userDaoJdbc.add(user1);
+        userDaoJdbc.add(user2);
         assertThat(dao.getCount(), is(2));
 
-        User userget1 = userDaoJdbcTemplate.get(user1.getId());
+        User userget1 = userDaoJdbc.get(user1.getId());
         assertThat(userget1.getName(), is(user1.getName()));
         assertThat(userget1.getPassword(), is(user1.getPassword()));
 
-        User userget2 = userDaoJdbcTemplate.get(user2.getId());
+        User userget2 = userDaoJdbc.get(user2.getId());
         assertThat(userget2.getName(), is(user2.getName()));
         assertThat(userget2.getPassword(), is(user2.getPassword()));
     }
 
     @Test
     public void count() throws SQLException, ClassNotFoundException {
-        userDaoJdbcTemplate.deleteAll();
-        assertThat(userDaoJdbcTemplate.getCount(), is(0));
+        userDaoJdbc.deleteAll();
+        assertThat(userDaoJdbc.getCount(), is(0));
 
-        userDaoJdbcTemplate.add(user1);
-        assertThat(userDaoJdbcTemplate.getCount(), is(1));
+        userDaoJdbc.add(user1);
+        assertThat(userDaoJdbc.getCount(), is(1));
 
-        userDaoJdbcTemplate.add(user2);
-        assertThat(userDaoJdbcTemplate.getCount(), is(2));
+        userDaoJdbc.add(user2);
+        assertThat(userDaoJdbc.getCount(), is(2));
 
-        userDaoJdbcTemplate.add(user3);
-        assertThat(userDaoJdbcTemplate.getCount(), is(3));
+        userDaoJdbc.add(user3);
+        assertThat(userDaoJdbc.getCount(), is(3));
     }
 
     @Test
     void getUserFailure() throws SQLException {
-        userDaoJdbcTemplate.deleteAll();
-        assertThat(userDaoJdbcTemplate.getCount(), is(0));
+        userDaoJdbc.deleteAll();
+        assertThat(userDaoJdbc.getCount(), is(0));
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
-            userDaoJdbcTemplate.get("unknown_id");
+            userDaoJdbc.get("unknown_id");
         });
     }
 
     @Test
     void getAll() {
-        userDaoJdbcTemplate.deleteAll();
+        userDaoJdbc.deleteAll();
 
         // query() 메소드에서 조회 결과가 없는 경우 크기 0인 리스트를 반환하는지 테스트
-        List<User> users0 = userDaoJdbcTemplate.getAll();
+        List<User> users0 = userDaoJdbc.getAll();
         assertThat(users0.size(), is(0));
 
-        userDaoJdbcTemplate.add(user1);  // Id: gyumee
-        List<User> users1 = userDaoJdbcTemplate.getAll();
+        userDaoJdbc.add(user1);  // Id: gyumee
+        List<User> users1 = userDaoJdbc.getAll();
         assertThat(users1.size(), is(1));
         checkSameUser(user1, users1.get(0));
 
-        userDaoJdbcTemplate.add(user2);  // Id: leegw700
-        List<User> users2 = userDaoJdbcTemplate.getAll();
+        userDaoJdbc.add(user2);  // Id: leegw700
+        List<User> users2 = userDaoJdbc.getAll();
         assertThat(users2.size(), is(2));
         checkSameUser(user1, users2.get(0));
         checkSameUser(user2, users2.get(1));
 
         // getAll(): id순으로 정렬해 반환
         // 따라서 알파벳순으로 가장 빠른 user3가 gitAll() 반환값의 첫번째에 위치
-        userDaoJdbcTemplate.add(user3);  // Id: bumjin
-        List<User> users3 = userDaoJdbcTemplate.getAll();
+        userDaoJdbc.add(user3);  // Id: bumjin
+        List<User> users3 = userDaoJdbc.getAll();
         assertThat(users3.size(), is(3));
         checkSameUser(user3, users3.get(0));
         checkSameUser(user1, users3.get(1));

@@ -1,21 +1,15 @@
 package com.ch3.dao;
 
 import com.ch3.domain.User;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDaoJdbcTemplate {
+public class UserDaoJdbc {
     // 스프링에서 제공하는 템플릿 콜백
     private JdbcTemplate jdbcTemplate;
 
@@ -23,7 +17,7 @@ public class UserDaoJdbcTemplate {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public UserDaoJdbcTemplate(DataSource dataSource) {
+    public UserDaoJdbc(DataSource dataSource) {
         setDataSource(dataSource);
     }
 
