@@ -64,7 +64,6 @@ public class UserDaoTest {
         User userget2 = userDao.get(user2.getId());
         checkSameUser(user2, userget2);
 
-
     }
 
     @Test
@@ -163,6 +162,26 @@ public class UserDaoTest {
 
             assertThat(set.translate(null, null, sqlEx), is(DuplicateKeyException.class));
         }
+    }
+
+    @Test
+    public void update() {
+        userDao.deleteAll();
+
+        userDao.add(user1);
+        userDao.add(user2);
+
+        user1.setName("이하늘");
+        user1.setPassword("springno6");
+        user1.setLevel(Level.GOLD);
+        user1.setLogin(1000);
+        user1.setRecommend(999);
+        userDao.update(user1);
+
+        User user1update = userDao.get(user1.getId());
+        checkSameUser(user1, user1update);
+        User user2same = userDao.get(user2.getId());
+        checkSameUser(user2, user2same);
     }
 
 }
