@@ -25,5 +25,8 @@ public class DaoFactory5 {
     // 빈의 이름은 클래스의 구현 인터페이스 이름을 따르는 것이 좋다.
     // -> 그래야 나중에 구현 클래스를 바꿔도 혼란이 없기 때문
     @Bean
-    public UserDaoJdbc userDao() { return new UserDaoJdbc(connectionMaker()); }
+    public UserDao userDao() { return new UserDaoJdbc(connectionMaker()); }
+
+    @Bean
+    public UserService userService() { return new UserService(userDao()); }
 }
