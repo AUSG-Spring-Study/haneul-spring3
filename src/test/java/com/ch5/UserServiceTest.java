@@ -63,4 +63,25 @@ public class UserServiceTest {
         User userUpdate = userDao.get(user.getId());
         assertThat(userUpdate.getLevel(), is(expectedLevel));
     }
+
+    // add(): UserService의 add()를 호출하면 레벨이 BASIC으로 설정되는 기능 검증
+    // 레벨이 미리 정해진 경우: 해당 레벨 사용
+    // 레벨이 비어 있는 경우: BASIC 레벨 부여
+    @Test
+    public void add() {
+        userDao.deleteAll();
+
+        User userWithLevel = users.get(4);
+        User userWithoutLevel = users.get(0);
+        userWithoutLevel.setLevel(null);
+
+        userService.add(userWithLevel);
+        userService.add(userWithoutLevel);
+
+        User userWithLevelRead = userDao.get(userWithLevel.getId());
+        User userWithoutLevelRead = userDao.get(userWithoutLevel.getId());
+
+        assertThat(userWithLevelRead.getLevel(), is(userWithLevel.getLevel()));
+        assertThat(userWithoutLevelRead.getLevel(), is(Level.BASIC));
+    }
 }
