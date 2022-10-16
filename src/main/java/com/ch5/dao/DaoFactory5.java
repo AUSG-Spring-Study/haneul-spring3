@@ -1,6 +1,9 @@
 package com.ch5.dao;
 
 
+import com.ch5.service.UserLevelUpgradePolicy;
+import com.ch5.service.UserLevelUpgradePolicyImpl;
+import com.ch5.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -29,4 +32,7 @@ public class DaoFactory5 {
 
     @Bean
     public UserService userService() { return new UserService(userDao()); }
+
+    @Bean
+    public UserLevelUpgradePolicy userLevelUpgradePolicy() { return new UserLevelUpgradePolicyImpl(userDao()); }
 }
