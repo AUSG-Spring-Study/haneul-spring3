@@ -18,6 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoFactory3.class)
@@ -38,9 +39,9 @@ public class UserDaoTest {
     // @BeforeEach 메소드 내 변수값을 테스트 메소드에서 사용하고 싶은 경우 인스턴스 변수를 이용해야 한다.
     @BeforeEach
     public void setUp() {
-        this.user1 = new User("user1", "name1", "test1");
-        this.user2 = new User("user2", "name2", "test2");
-        this.user3 = new User("user3", "name3", "spring");
+        this.user1 = new User("gyumee", "name1", "test1");
+        this.user2 = new User("leegw700", "name2", "test2");
+        this.user3 = new User("bumjin", "name3", "spring");
     }
 
     @Test
@@ -83,5 +84,40 @@ public class UserDaoTest {
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
             userDaoJdbcTemplate.get("unknown_id");
         });
+    }
+
+    @Test
+    void getAll() {
+        userDaoJdbcTemplate.deleteAll();
+
+        // query() 메소드에서 조회 결과가 없는 경우 크기 0인 리스트를 반환하는지 테스트
+        List<User> users0 = userDaoJdbcTemplate.getAll();
+        assertThat(users0.size(), is(0));
+
+        userDaoJdbcTemplate.add(user1);  // Id: gyumee
+        List<User> users1 = userDaoJdbcTemplate.getAll();
+        assertThat(users1.size(), is(1));
+        checkSameUser(user1, users1.get(0));
+
+        userDaoJdbcTemplate.add(user2);  // Id: leegw700
+        List<User> users2 = userDaoJdbcTemplate.getAll();
+        assertThat(users2.size(), is(2));
+        checkSameUser(user1, users2.get(0));
+        checkSameUser(user2, users2.get(1));
+
+        // getAll(): id순으로 정렬해 반환
+        // 따라서 알파벳순으로 가장 빠른 user3가 gitAll() 반환값의 첫번째에 위치
+        userDaoJdbcTemplate.add(user3);  // Id: bumjin
+        List<User> users3 = userDaoJdbcTemplate.getAll();
+        assertThat(users3.size(), is(3));
+        checkSameUser(user3, users3.get(0));
+        checkSameUser(user1, users3.get(1));
+        checkSameUser(user2, users3.get(2));
+    }
+
+    private void checkSameUser(User user1, User user2) {
+        assertThat(user1.getId(), is(user2.getId()));
+        assertThat(user1.getName(), is(user2.getName()));
+        assertThat(user1.getPassword(), is(user2.getPassword()));
     }
 }
