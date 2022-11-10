@@ -1,4 +1,4 @@
-package com.ch5.domain;
+package com.ch6.domain;
 
 public class User {
     String id;
