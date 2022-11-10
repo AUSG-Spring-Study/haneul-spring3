@@ -1,6 +1,9 @@
 package com.ch5.dao;
 
 
+import com.ch5.service.UserLevelUpgradePolicy;
+import com.ch5.service.UserLevelUpgradePolicyImpl;
+import com.ch5.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -25,5 +28,11 @@ public class DaoFactory5 {
     // 빈의 이름은 클래스의 구현 인터페이스 이름을 따르는 것이 좋다.
     // -> 그래야 나중에 구현 클래스를 바꿔도 혼란이 없기 때문
     @Bean
-    public UserDaoJdbc userDao() { return new UserDaoJdbc(connectionMaker()); }
+    public UserDao userDao() { return new UserDaoJdbc(connectionMaker()); }
+
+    @Bean
+    public UserService userService() { return new UserService(userDao()); }
+
+    @Bean
+    public UserLevelUpgradePolicy userLevelUpgradePolicy() { return new UserLevelUpgradePolicyImpl(userDao()); }
 }
